@@ -8,11 +8,12 @@ public class Product {
 	private String name;
 	private int qtyInStock;
 	private double price;
+	private boolean active;
 
 	// constructor
 
 	public Product() {
-
+		
 	}
 
 	public Product(int itemId, String name, int qtyInStock, double price) {
@@ -20,6 +21,7 @@ public class Product {
 		this.name = name;
 		this.qtyInStock = qtyInStock;
 		this.price = price;
+		this.active = true;
 	}
 
 	// getter setter
@@ -56,14 +58,31 @@ public class Product {
 		this.price = price;
 	}
 
-	// public
+	public boolean isActive() {
+		return active;
+	}
 
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
+	/**
+	 * Calculate the total of the inventory.
+	 * @return inventoryValue
+	 */
+	private double getInventoryValue() {
+		return this.price * this.qtyInStock;
+	}
+
+	// public
 	@Override
-	public String toString() {
-		return "\n\nItem number : " + this.itemId 
-				+ "\nName : " + this.name 
-				+ "\nQuantity in stock : " + this.qtyInStock
-				+ "\nPrice:" + this.price;
+	public String toString() {	
+		return "\n\nItem number 		: " + this.itemId 
+				+ "\nName 				: " + this.name 
+				+ "\nQuantity in stock 	: " + this.qtyInStock
+				+ "\nPrice				: " + this.price
+				+ "\nInventory value	: " + this.getInventoryValue()
+				+ "\nActive 			: " + (this.active ? "Active" : "Deactived");
 	}
 
 }
