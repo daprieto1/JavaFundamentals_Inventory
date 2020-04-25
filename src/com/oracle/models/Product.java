@@ -1,10 +1,12 @@
 package com.oracle.models;
 
+import java.util.UUID;
+
 public class Product {
 
 	// Fields
 
-	private int itemId;
+	private UUID itemId;
 	private String name;
 	private int qtyInStock;
 	private double price;
@@ -16,8 +18,8 @@ public class Product {
 		
 	}
 
-	public Product(int itemId, String name, int qtyInStock, double price) {
-		this.itemId = itemId;
+	public Product(String name, int qtyInStock, double price) {
+		this.itemId = UUID.randomUUID();
 		this.name = name;
 		this.qtyInStock = qtyInStock;
 		this.price = price;
@@ -26,11 +28,11 @@ public class Product {
 
 	// getter setter
 
-	public int getItemId() {
+	public UUID getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(int itemId) {
+	public void setItemId(UUID itemId) {
 		this.itemId = itemId;
 	}
 
@@ -77,11 +79,11 @@ public class Product {
 	// public
 	@Override
 	public String toString() {	
-		return "\n\nItem number 		: " + this.itemId 
+		return "\n\nItem number 	: " + this.itemId.toString() 
 				+ "\nName 				: " + this.name 
 				+ "\nQuantity in stock 	: " + this.qtyInStock
-				+ "\nPrice				: " + this.price
-				+ "\nInventory value	: " + this.getInventoryValue()
+				+ "\nPrice			: " + this.price
+				+ "\nInventory value		: " + this.getInventoryValue()
 				+ "\nActive 			: " + (this.active ? "Active" : "Deactived");
 	}
 

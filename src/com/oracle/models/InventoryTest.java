@@ -14,15 +14,13 @@ public class InventoryTest {
 		String nameTemp;
 		double priceTemp;
 		int qtyTemp;
-		int numProducts;
+		int numProducts = 1;
+		String userOption;
 		
-		/*System.out.println("How many products do you want to enter?");
-		numProducts = in.nextInt();
-		
-		for(int i = 0; i < numProducts;i++) {
-			System.out.println("Info of the product " + (i+1) + " of " + numProducts);
-			System.out.print("Please enter Id : ");
-			idTemp = in.nextInt();
+		do {
+			
+			System.out.println("Info of the product " + numProducts);
+			
 			System.out.print("Please enter name : ");
 			nameTemp = in.next();
 			System.out.print("Please enter price : ");
@@ -30,15 +28,20 @@ public class InventoryTest {
 			System.out.print("Please enter quantity : ");
 			qtyTemp = in.nextInt();
 					
-			products.add(new Product(idTemp, nameTemp, qtyTemp,priceTemp));
-		}*/
+			numProducts++;
+			products.add(new Product(nameTemp, qtyTemp,priceTemp));
+			System.out.println("Do you want to add more products?");
+			userOption = in.next();
+			
+		}while(userOption.toUpperCase().equals("S") || userOption.toUpperCase().equals("SI"));
+		
 		
 		in.close();
 		
-		products.add(new Product(1, "Deditos", 75, 5600.35));
-		products.add(new Product(2, "Bocadillo", 324, 6344.35));
-		products.add(new Product(3, "Aromatica", 634, 3468.35));
-		products.add(new Product(4, "Chocolate", 24, 2346.35));
+		products.add(new Product("Deditos", 75, 5600.35));
+		products.add(new Product("Bocadillo", 324, 6344.35));
+		products.add(new Product("Aromatica", 634, 3468.35));
+		products.add(new Product("Chocolate", 24, 2346.35));
 		
 		products.get(1).setActive(false);
 		
