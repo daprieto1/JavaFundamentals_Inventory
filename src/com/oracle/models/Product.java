@@ -75,8 +75,26 @@ public class Product {
 	private double getInventoryValue() {
 		return this.price * this.qtyInStock;
 	}
+	
+	/**
+	 * Add more stock of the product.
+	 * @param quantity
+	 */
+	public void addStock(int quantity) {
+		this.qtyInStock += quantity;
+	}
+	
+	/**
+	 * Deduct stock of the product.
+	 * @param quantity
+	 */
+	public void deductStock(int quantity) throws InventoryException{
+		if(this.qtyInStock-quantity < 0)
+			throw new InventoryException(InventoryException.BAD_STOCK);
+		
+		this.qtyInStock -= quantity;
+	}
 
-	// public
 	@Override
 	public String toString() {	
 		return "\n\nItem number 	: " + this.itemId.toString() 
