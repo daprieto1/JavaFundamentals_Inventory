@@ -14,10 +14,6 @@ public class Product {
 
 	// constructor
 
-	public Product() {
-		
-	}
-
 	public Product(String name, int qtyInStock, double price) {
 		this.itemId = UUID.randomUUID();
 		this.name = name;
@@ -72,7 +68,7 @@ public class Product {
 	 * Calculate the total of the inventory.
 	 * @return inventoryValue
 	 */
-	private double getInventoryValue() {
+	protected double getInventoryValue() {
 		return this.price * this.qtyInStock;
 	}
 	
@@ -97,11 +93,11 @@ public class Product {
 
 	@Override
 	public String toString() {	
-		return "\n\nItem number 	: " + this.itemId.toString() 
+		return "\n\nItem number 		: " + this.itemId.toString() 
 				+ "\nName 				: " + this.name 
 				+ "\nQuantity in stock 	: " + this.qtyInStock
-				+ "\nPrice			: " + this.price
-				+ "\nInventory value		: " + this.getInventoryValue()
+				+ "\nPrice 				: " + this.price
+				+ "\nInventory value 	: " + this.getInventoryValue()
 				+ "\nActive 			: " + (this.active ? "Active" : "Deactived");
 	}
 

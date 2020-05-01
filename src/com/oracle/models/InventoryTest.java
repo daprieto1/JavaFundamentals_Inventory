@@ -16,21 +16,12 @@ public class InventoryTest {
 		int numProducts = 1;
 		String userOption;
 
-		/*
-		 * System.out.print("Enter the number of products you would like to add : ");
-		 * int maxProducts = in.nextInt();
-		 * 
-		 * do { try { System.out.println("Info of the product " + numProducts);
-		 * addToInventory(in); numProducts++; maxProducts--; } catch (Exception e) {
-		 * System.out.println("Incorrect value entered."); in.nextLine(); }
-		 * 
-		 * } while (maxProducts > 0);
-		 */
-
 		products.add(new Product("Deditos", 75, 5600.35));
 		products.add(new Product("Bocadillo", 324, 6344.35));
 		products.add(new Product("Aromatica", 634, 3468.35));
 		products.add(new Product("Chocolate", 24, 2346.35));
+		products.add(new DVD("Tarzan", 10, 345.5, 130, 4, "Disney"));
+		products.add(new CD("De musica ligers", 67, 3495.4, "Soda Estereo", 15, "Sony Music"));
 
 		int menuOption = -1;
 		do {
@@ -64,7 +55,7 @@ public class InventoryTest {
 	 * @param products - Database of products
 	 * @param in       - Scanner
 	 */
-	static void addToInventory(Scanner in) {
+	static Product addToInventory(Scanner in) {
 		String nameTemp;
 		double priceTemp;
 		int qtyTemp;
@@ -76,7 +67,26 @@ public class InventoryTest {
 		System.out.print("Please enter quantity : ");
 		qtyTemp = in.nextInt();
 
-		products.add(new Product(nameTemp, qtyTemp, priceTemp));
+		Product product = new Product(nameTemp, qtyTemp, priceTemp);		
+		return product;
+	}
+	
+	static DVD addDVDToInventory(Scanner in) {
+		String studioTemp;
+		int agerangeTemp;
+		int durationTemp;		 
+		
+		Product product = addToInventory(in);
+		
+		System.out.print("Please enter studio : ");
+		studioTemp = in.next();
+		System.out.print("Please enter age range : ");
+		agerangeTemp = in.nextInt();
+		System.out.print("Please enter duration : ");
+		durationTemp = in.nextInt();
+		
+		DVD dvd = new DVD(product.getName(), product.getQtyInStock(), product.getPrice(), durationTemp, agerangeTemp, studioTemp);
+		return dvd;
 	}
 
 	static Product getProduct(UUID id) throws InventoryException {
@@ -103,7 +113,7 @@ public class InventoryTest {
 		do {
 			try {
 				System.out.println("\n\n 1. View Inventory " + "\n 2. Add Stock" + "\n 3. Deduct Stock"
-						+ "\n 4. Discontinue Product" + "\n 0. Exit");
+						+ "\n 4. Discontinue Product" + "\n 5. Add Product" + "\n 6. Add DVD" + "\n 7. Add CD" + "\n 0. Exit");
 				System.out.print("Please enter a menu option : ");
 				menuOption = in.nextInt();
 			} catch (InputMismatchException e) {
@@ -115,7 +125,7 @@ public class InventoryTest {
 				in.nextLine();
 			}
 
-		} while (menuOption < 0 || menuOption > 4);
+		} while (menuOption < 0 || menuOption > 7);
 
 		in.nextLine();
 		return menuOption;
@@ -184,6 +194,15 @@ public class InventoryTest {
 				}
 			} while (product == null);
 
+			break;
+		case 5:						
+			products.add(addToInventory(in));
+			break;
+		case 6:			
+			products.add(addDVDToInventory(in));
+			break;
+		case 7:			
+			addToInventory(in);
 			break;
 		}
 	}
