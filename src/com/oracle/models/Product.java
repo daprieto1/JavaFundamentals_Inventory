@@ -14,6 +14,13 @@ public class Product {
 
 	// constructor
 
+	public Product() {
+	}
+
+	public Product(Product p) {
+		new Product(p.getName(), p.getQtyInStock(), p.getPrice());
+	}
+
 	public Product(String name, int qtyInStock, double price) {
 		this.itemId = UUID.randomUUID();
 		this.name = name;
@@ -63,42 +70,44 @@ public class Product {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
+
 	/**
 	 * Calculate the total of the inventory.
+	 * 
 	 * @return inventoryValue
 	 */
-	protected double getInventoryValue() {
+	public double getInventoryValue() {
 		return this.price * this.qtyInStock;
 	}
-	
+
 	/**
 	 * Add more stock of the product.
+	 * 
 	 * @param quantity
 	 */
 	public void addStock(int quantity) {
 		this.qtyInStock += quantity;
 	}
-	
+
 	/**
 	 * Deduct stock of the product.
+	 * 
 	 * @param quantity
 	 */
-	public void deductStock(int quantity) throws InventoryException{
-		if(this.qtyInStock-quantity < 0)
-			throw new InventoryException(InventoryException.BAD_STOCK);
-		
+	public void deductStock(int quantity) throws InventoryException {
+		if (this.qtyInStock - quantity < 0)
+			throw new InventoryException(
+					InventoryException.BAD_STOCK + ": new stock = " + (this.qtyInStock - quantity));
+
 		this.qtyInStock -= quantity;
 	}
 
 	@Override
-	public String toString() {	
-		return "\n\nItem number 		: " + this.itemId.toString() 
-				+ "\nName 				: " + this.name 
-				+ "\nQuantity in stock 	: " + this.qtyInStock
-				+ "\nPrice 				: " + this.price
-				+ "\nInventory value 	: " + this.getInventoryValue()
-				+ "\nActive 			: " + (this.active ? "Active" : "Deactived");
+	public String toString() {
+		return "\n\nItem number 		: " + this.itemId.toString() + "\nName 				: " + this.name
+				+ "\nQuantity in stock 	: " + this.qtyInStock + "\nPrice 				: " + this.price
+				+ "\nInventory value 	: " + this.getInventoryValue() + "\nActive 			: "
+				+ (this.active ? "Active" : "Deactived");
 	}
 
 }

@@ -6,13 +6,13 @@ public class DVD extends Product {
 	private int ageRange;
 	private String filmStudio;
 
-	public DVD(String name, int qtyInStock, double price, int duration, int ageRange, String filmStudio) {
-		super(name, qtyInStock, price);
+	public DVD(Product p, int duration, int ageRange, String filmStudio) {	
+		super(p.getName(), p.getQtyInStock(), p.getPrice());
 		this.duration = duration;
 		this.ageRange = ageRange;
-		this.filmStudio = filmStudio;			
+		this.filmStudio = filmStudio;
 	}
-
+	
 	public int getDuration() {
 		return duration;
 	}

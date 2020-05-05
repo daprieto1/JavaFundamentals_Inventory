@@ -4,10 +4,10 @@ public class CD extends Product {
 
 	private String artist;
 	private int numOfSongs;
-	private String discOwner;
-
-	public CD(String name, int qtyInStock, double price, String artist, int numOfSongs, String discOwner) {
-		super(name, qtyInStock, price);
+	private String discOwner;		
+	
+	public CD(Product p, String artist, int numOfSongs, String discOwner) {	
+		super(p.getName(),p.getQtyInStock(), p.getPrice());
 		this.artist = artist;
 		this.numOfSongs = numOfSongs;
 		this.discOwner = discOwner;

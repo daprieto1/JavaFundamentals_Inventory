@@ -20,8 +20,6 @@ public class InventoryTest {
 		products.add(new Product("Bocadillo", 324, 6344.35));
 		products.add(new Product("Aromatica", 634, 3468.35));
 		products.add(new Product("Chocolate", 24, 2346.35));
-		products.add(new DVD("Tarzan", 10, 345.5, 130, 4, "Disney"));
-		products.add(new CD("De musica ligers", 67, 3495.4, "Soda Estereo", 15, "Sony Music"));
 
 		int menuOption = -1;
 		do {
@@ -67,26 +65,45 @@ public class InventoryTest {
 		System.out.print("Please enter quantity : ");
 		qtyTemp = in.nextInt();
 
-		Product product = new Product(nameTemp, qtyTemp, priceTemp);		
+		Product product = new Product(nameTemp, qtyTemp, priceTemp);
+
 		return product;
 	}
-	
+
 	static DVD addDVDToInventory(Scanner in) {
 		String studioTemp;
 		int agerangeTemp;
-		int durationTemp;		 
-		
+		int durationTemp;
+
 		Product product = addToInventory(in);
-		
+
 		System.out.print("Please enter studio : ");
 		studioTemp = in.next();
 		System.out.print("Please enter age range : ");
 		agerangeTemp = in.nextInt();
 		System.out.print("Please enter duration : ");
 		durationTemp = in.nextInt();
-		
-		DVD dvd = new DVD(product.getName(), product.getQtyInStock(), product.getPrice(), durationTemp, agerangeTemp, studioTemp);
+
+		DVD dvd = new DVD(product, durationTemp, agerangeTemp, studioTemp);
 		return dvd;
+	}
+
+	static CD addCDToInventory(Scanner in) {
+		String artistTemp;
+		String discOwnerTemp;
+		int numOfSongsTemp;
+
+		Product product = addToInventory(in);
+
+		System.out.print("Please enter the artist : ");
+		artistTemp = in.next();
+		System.out.println("Please enter the disc owner : ");
+		discOwnerTemp = in.next();
+		System.out.println("Please enter the num of songs : ");
+		numOfSongsTemp = in.nextInt();
+
+		CD cd = new CD(product, artistTemp, numOfSongsTemp, discOwnerTemp);
+		return cd;
 	}
 
 	static Product getProduct(UUID id) throws InventoryException {
@@ -113,7 +130,7 @@ public class InventoryTest {
 		do {
 			try {
 				System.out.println("\n\n 1. View Inventory " + "\n 2. Add Stock" + "\n 3. Deduct Stock"
-						+ "\n 4. Discontinue Product" + "\n 5. Add Product" + "\n 6. Add DVD" + "\n 7. Add CD" + "\n 0. Exit");
+						+ "\n 4. Discontinue Product" + "\n 5. Add Product" + "\n 0. Exit");
 				System.out.print("Please enter a menu option : ");
 				menuOption = in.nextInt();
 			} catch (InputMismatchException e) {
@@ -195,15 +212,25 @@ public class InventoryTest {
 			} while (product == null);
 
 			break;
-		case 5:						
-			products.add(addToInventory(in));
-			break;
-		case 6:			
-			products.add(addDVDToInventory(in));
-			break;
-		case 7:			
-			addToInventory(in);
-			break;
+		case 5:
+			String productType;
+			ProductType type;
+			Product newProduct = null;
+			System.out.print("Which product do you want to create? : ");
+			productType = in.next();
+
+			type = ProductType.valueOf(productType);
+
+			switch (type) {
+				case CD:
+					newProduct = addCDToInventory(in);
+					break;
+				case DVD:
+					newProduct = addDVDToInventory(in);
+					break;
+			}
+			
+			products.add(newProduct);
 		}
 	}
 
