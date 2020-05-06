@@ -7,19 +7,20 @@ import java.util.UUID;
 
 public class InventoryTest {
 
-	private static ArrayList<Product> products = new ArrayList<Product>();
+	private static Inventory inventory;
 
 	public static void main(String[] args) {
 
 		Scanner in = new Scanner(System.in);
+		inventory = new Inventory();
 
 		int numProducts = 1;
 		String userOption;
-
-		products.add(new Product("Deditos", 75, 5600.35));
-		products.add(new Product("Bocadillo", 324, 6344.35));
-		products.add(new Product("Aromatica", 634, 3468.35));
-		products.add(new Product("Chocolate", 24, 2346.35));
+		
+		inventory.addToInventory(new Product("Deditos", 75, 5600.35));
+		inventory.addToInventory(new Product("Bocadillo", 324, 6344.35));
+		inventory.addToInventory(new Product("Aromatica", 634, 3468.35));
+		inventory.addToInventory(new Product("Chocolate", 24, 2346.35));
 
 		int menuOption = -1;
 		do {
@@ -38,13 +39,7 @@ public class InventoryTest {
 	 */
 	static void displayInventory() {
 		System.out.println("Display from Array List");
-		for (Product p : products)
-			System.out.println(p);
-	}
-
-	static void displayInventory(String name) {
-		System.out.println("Display using Array and String");
-		products.stream().filter(p -> p.getName().equals(name)).forEach(p -> System.out.println(p));
+		System.out.println(inventory.toString());		
 	}
 
 	/**
@@ -106,24 +101,6 @@ public class InventoryTest {
 		return cd;
 	}
 
-	static Product getProduct(UUID id) throws InventoryException {
-		Product product = products.stream().filter(p -> p.getItemId().equals(id)).findFirst().orElse(null);
-
-		if (product == null)
-			throw new InventoryException(InventoryException.NOT_FOUND_PRODUCT);
-
-		return product;
-	}
-
-	/**
-	 * Get num of items in the inventory.
-	 * 
-	 * @return
-	 */
-	static int getNumProducts() {
-		return products.size();
-	}
-
 	static int getMenuOption(Scanner in) {
 		int menuOption = -1;
 
@@ -170,7 +147,7 @@ public class InventoryTest {
 					System.out.print("Insert the additional stock : ");
 					int quantity = in.nextInt();
 					in.nextLine();
-					product = getProduct(id);
+					product = inventory.findProduct(id);
 					product.addStock(quantity);
 				} catch (InventoryException e) {
 					System.out.println(e.getMessage() + " with id = " + idString);
@@ -183,7 +160,7 @@ public class InventoryTest {
 					System.out.print("Insert the product id : ");
 					idString = in.nextLine();
 					UUID id = UUID.fromString(idString);
-					product = getProduct(id);
+					product = inventory.findProduct(id);
 					try {
 						System.out.print("Insert the deduct stock : ");
 						int quantity = in.nextInt();
@@ -204,7 +181,7 @@ public class InventoryTest {
 					System.out.print("Insert the product id : ");
 					idString = in.nextLine();
 					UUID id = UUID.fromString(idString);
-					product = getProduct(id);
+					product = inventory.findProduct(id);
 					product.setActive(false);
 				} catch (InventoryException e) {
 					System.out.println(e.getMessage() + " with id = " + idString);
@@ -230,7 +207,7 @@ public class InventoryTest {
 					break;
 			}
 			
-			products.add(newProduct);
+			inventory.addToInventory(newProduct);
 		}
 	}
 

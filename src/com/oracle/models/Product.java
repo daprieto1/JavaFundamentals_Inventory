@@ -1,8 +1,9 @@
 package com.oracle.models;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Product {
+public class Product implements Serializable{
 
 	// Fields
 
@@ -108,6 +109,16 @@ public class Product {
 				+ "\nQuantity in stock 	: " + this.qtyInStock + "\nPrice 				: " + this.price
 				+ "\nInventory value 	: " + this.getInventoryValue() + "\nActive 			: "
 				+ (this.active ? "Active" : "Deactived");
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Product))
+			return false;
+		
+		Product p = (Product)obj;
+		
+		return this.itemId.equals(p.getItemId());
 	}
 
 }
