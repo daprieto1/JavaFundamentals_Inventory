@@ -1,26 +1,24 @@
 package com.oracle.models;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.UUID;
 
-public class InventoryTest {
+import com.oracle.services.InventoryService;
 
-	private static Inventory inventory;
+public class InventoryMenu {
 
-	public static void main(String[] args) {
+	private static InventoryService inventoryService;
+
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 
 		Scanner in = new Scanner(System.in);
-		inventory = new Inventory();
+		inventoryService = new InventoryService();
 
 		int numProducts = 1;
-		String userOption;
-		
-		inventory.addToInventory(new Product("Deditos", 75, 5600.35));
-		inventory.addToInventory(new Product("Bocadillo", 324, 6344.35));
-		inventory.addToInventory(new Product("Aromatica", 634, 3468.35));
-		inventory.addToInventory(new Product("Chocolate", 24, 2346.35));
+		String userOption;			
 
 		int menuOption = -1;
 		do {
@@ -39,7 +37,7 @@ public class InventoryTest {
 	 */
 	static void displayInventory() {
 		System.out.println("Display from Array List");
-		System.out.println(inventory.toString());		
+		System.out.println(inventoryService.getInventory().toString());		
 	}
 
 	/**
@@ -129,8 +127,9 @@ public class InventoryTest {
 	 * Execute the particular action
 	 * 
 	 * @param menuOption
+	 * @throws IOException 
 	 */
-	static void executeAction(Scanner in, int menuOption) {
+	static void executeAction(Scanner in, int menuOption) throws IOException {
 		Product product = null;
 		String idString = "";
 
@@ -147,7 +146,7 @@ public class InventoryTest {
 					System.out.print("Insert the additional stock : ");
 					int quantity = in.nextInt();
 					in.nextLine();
-					product = inventory.findProduct(id);
+					product = inventoryService.getInventory().findProduct(id);
 					product.addStock(quantity);
 				} catch (InventoryException e) {
 					System.out.println(e.getMessage() + " with id = " + idString);
@@ -160,7 +159,7 @@ public class InventoryTest {
 					System.out.print("Insert the product id : ");
 					idString = in.nextLine();
 					UUID id = UUID.fromString(idString);
-					product = inventory.findProduct(id);
+					product = inventoryService.getInventory().findProduct(id);
 					try {
 						System.out.print("Insert the deduct stock : ");
 						int quantity = in.nextInt();
@@ -181,7 +180,7 @@ public class InventoryTest {
 					System.out.print("Insert the product id : ");
 					idString = in.nextLine();
 					UUID id = UUID.fromString(idString);
-					product = inventory.findProduct(id);
+					product = inventoryService.getInventory().findProduct(id);
 					product.setActive(false);
 				} catch (InventoryException e) {
 					System.out.println(e.getMessage() + " with id = " + idString);
@@ -207,7 +206,8 @@ public class InventoryTest {
 					break;
 			}
 			
-			inventory.addToInventory(newProduct);
+			inventoryService.saveProductToInventory(newProduct);
+			
 		}
 	}
 

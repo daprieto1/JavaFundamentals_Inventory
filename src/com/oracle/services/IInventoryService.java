@@ -10,5 +10,7 @@ public interface IInventoryService {
 	public Inventory getInventory();
 
 	public void saveProductToInventory(Product p) throws IOException;
+	
+	
 
 }
