@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import com.oracle.models.Inventory;
+import com.oracle.models.InventoryException;
 import com.oracle.models.Product;
 import com.oracle.persistence.DAOProduct;
 import com.oracle.persistence.FileObjectStream;
@@ -29,8 +30,13 @@ public class InventoryService implements IInventoryService {
 
 	@Override
 	public void saveProductToInventory(Product product) throws SQLException {
-		this.inventory.addToInventory(product);
-		daoProduct.insert(product);
+		try {
+			this.inventory.findProduct(product.getItemId());
+			daoProduct.update(product);
+		}catch (InventoryException e) {
+			this.inventory.addToInventory(product);
+			daoProduct.insert(product);
+		}				
 	}
 
 	@Override

@@ -150,6 +150,7 @@ public class InventoryMenu {
 					in.nextLine();
 					product = inventoryService.getInventory().findProduct(id);
 					product.addStock(quantity);
+					inventoryService.saveProductToInventory(product);
 				} catch (InventoryException e) {
 					System.out.println(e.getMessage() + " with id = " + idString);
 				}
@@ -167,6 +168,7 @@ public class InventoryMenu {
 						int quantity = in.nextInt();
 						in.nextLine();
 						product.deductStock(quantity);
+						inventoryService.saveProductToInventory(product);
 					} catch (InventoryException e) {
 						System.out.println(e.getMessage() + " final stock = " + (product.getQtyInStock()));
 						product = null;
@@ -184,6 +186,7 @@ public class InventoryMenu {
 					UUID id = UUID.fromString(idString);
 					product = inventoryService.getInventory().findProduct(id);
 					product.setActive(false);
+					inventoryService.saveProductToInventory(product);
 				} catch (InventoryException e) {
 					System.out.println(e.getMessage() + " with id = " + idString);
 				}
