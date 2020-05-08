@@ -2,16 +2,25 @@ package com.oracle.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Inventory implements Serializable{
 	
-	public ArrayList<Product> products;
+	private List<Product> products;
 
 	public Inventory() {		
 		this.products = new ArrayList<>();
-	}
+	}	
 	
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
 	public void addToInventory(Product product) {
 		this.products.add(product);
 	}

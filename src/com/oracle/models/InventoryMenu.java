@@ -1,6 +1,7 @@
 package com.oracle.models;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ public class InventoryMenu {
 
 	private static InventoryService inventoryService;
 
-	public static void main(String[] args) throws IOException, ClassNotFoundException {
+	public static void main(String[] args) throws SQLException, IOException {
 
 		Scanner in = new Scanner(System.in);
 		inventoryService = new InventoryService();
@@ -128,8 +129,9 @@ public class InventoryMenu {
 	 * 
 	 * @param menuOption
 	 * @throws IOException 
+	 * @throws SQLException 
 	 */
-	static void executeAction(Scanner in, int menuOption) throws IOException {
+	static void executeAction(Scanner in, int menuOption) throws IOException, SQLException {
 		Product product = null;
 		String idString = "";
 
